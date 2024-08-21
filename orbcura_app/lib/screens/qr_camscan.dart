@@ -11,11 +11,12 @@ class QrCamScanPage extends StatefulWidget {
   const QrCamScanPage({super.key});
 
   @override
-  State<QrCamScanPage> createState() => _QrCamScanPageState();
+  State<QrCamScanPage> createState() =>
+      _QrCamScanPageState();
 }
 
-class _QrCamScanPageState extends State<QrCamScanPage>
-    with WidgetsBindingObserver {
+class _QrCamScanPageState
+    extends State<QrCamScanPage> with WidgetsBindingObserver {
   final MobileScannerController controller = MobileScannerController(
     autoStart: false,
     torchEnabled: true,
@@ -115,14 +116,12 @@ class _QrCamScanPageState extends State<QrCamScanPage>
                       right: BorderSide(
                           color: AppColors.border, width: borderWidth)),
                   CornerChild(
-                    Image.asset(
-                      "assets/home.png",
-                      height: h / 16,
-                    ),
-                    () {
-                      Navigator.pop(context);
-                    },
-                  ))),
+          Image.asset(
+            "assets/home.png",
+            height: h / 16,
+          ),
+          () {Navigator.pop(context);},
+        ))),
           MobileScanner(
             controller: controller,
             errorBuilder: (context, error, child) {
@@ -130,6 +129,7 @@ class _QrCamScanPageState extends State<QrCamScanPage>
             },
             fit: BoxFit.contain,
           ),
+          
         ],
       ),
     );
@@ -144,3 +144,4 @@ class _QrCamScanPageState extends State<QrCamScanPage>
     await controller.dispose();
   }
 }
+
