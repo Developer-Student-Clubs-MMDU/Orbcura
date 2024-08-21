@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
 
-      home: ConfirmationScreen(UPIDetails("9996142844@superyes", amount: 10)),
+      home: SplashScreen(),
       routes: {
         '/home': (context) => HomeScreen(),
         // '/splash':(context) => SplashScreen(),
