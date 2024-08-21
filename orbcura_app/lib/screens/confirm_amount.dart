@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/screens/pin_entry.dart';
 import 'package:orbcura_app/utils/colors.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/utils/upi_uri_parser.dart';
+import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 
 class ConfirmAmountPage extends StatelessWidget {
@@ -89,6 +91,10 @@ class ConfirmAmountPage extends StatelessWidget {
                       onTap: () {
                         details.amount = int.parse(_amountController.text);
                         Vibration.vibrate();
+                        var pro = Provider.of<AppState>(context);
+                        if (details.payeeName != null) {
+                          pro.tts.speak("details.payeeName");
+                        }
                         Navigator.push(
                             context,
                             MaterialPageRoute(
