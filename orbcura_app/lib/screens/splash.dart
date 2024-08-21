@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/splash_video.mp4')
+    _controller = VideoPlayerController.asset('assets/splash_vid.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller.play();
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _controller.addListener(() {
       if (_controller.value.position == _controller.value.duration) {
         Navigator.of(context)
-            .pushReplacementNamed('/login'); // Navigate to home screen
+            .pushReplacementNamed('/language'); // Navigate to home screen
       }
     });
   }

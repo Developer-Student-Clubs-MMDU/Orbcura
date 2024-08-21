@@ -11,12 +11,11 @@ class QrCamScanPage extends StatefulWidget {
   const QrCamScanPage({super.key});
 
   @override
-  State<QrCamScanPage> createState() =>
-      _QrCamScanPageState();
+  State<QrCamScanPage> createState() => _QrCamScanPageState();
 }
 
-class _QrCamScanPageState
-    extends State<QrCamScanPage> with WidgetsBindingObserver {
+class _QrCamScanPageState extends State<QrCamScanPage>
+    with WidgetsBindingObserver {
   final MobileScannerController controller = MobileScannerController(
     autoStart: false,
     torchEnabled: true,
@@ -46,8 +45,15 @@ class _QrCamScanPageState
     UPIDetails? details;
     if (true) {
       try {
-        details = UPIDetails.fromURI((barcodes.barcodes.firstOrNull?.rawValue)!);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmAmountPage(details!)));
+        details =
+            UPIDetails.fromURI((barcodes.barcodes.firstOrNull?.rawValue)!);
+        unawaited(_subscription?.cancel());
+        _subscription = null;
+        unawaited(controller.stop()); 
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ConfirmAmountPage(details!)));
       } catch (e) {
         details = null;
       }
@@ -109,12 +115,14 @@ class _QrCamScanPageState
                       right: BorderSide(
                           color: AppColors.border, width: borderWidth)),
                   CornerChild(
-          Image.asset(
-            "assets/home.png",
-            height: h / 16,
-          ),
-          () {Navigator.pop(context);},
-        ))),
+                    Image.asset(
+                      "assets/home.png",
+                      height: h / 16,
+                    ),
+                    () {
+                      Navigator.pop(context);
+                    },
+                  ))),
           MobileScanner(
             controller: controller,
             errorBuilder: (context, error, child) {
@@ -122,7 +130,6 @@ class _QrCamScanPageState
             },
             fit: BoxFit.contain,
           ),
-          
         ],
       ),
     );
@@ -137,4 +144,3 @@ class _QrCamScanPageState
     await controller.dispose();
   }
 }
-

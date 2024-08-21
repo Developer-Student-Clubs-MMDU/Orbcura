@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         // '/splash':(context) => SplashScreen(),
         '/splash_nav': (context) => SplashNavScreen(),
         '/login': (context) => LoginScreen(),
+        '/language': (context) => LanguagePage(),
       },
       //home: SplashNavScreen()
     );

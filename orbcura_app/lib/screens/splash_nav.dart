@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/screens/chats.dart';
 import 'package:orbcura_app/screens/insta.dart';
+import 'package:orbcura_app/screens/qr_camscan.dart';
 import 'package:orbcura_app/screens/qr_scan.dart';
 import 'package:orbcura_app/screens/smart_cam.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
+import 'package:provider/provider.dart';
 
 class SplashNavScreen extends StatefulWidget {
   const SplashNavScreen({super.key});
@@ -17,7 +20,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
   void _onUpiButtonTap() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QrScanScreen()),
+      MaterialPageRoute(builder: (context) => QrCamScanPage()),
     );
   }
 
@@ -53,7 +56,10 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
           "assets/communicate.png",
           height: h / 16,
         ),
-        () {},
+        () {
+          Provider.of<AppState>(context, listen: false).tts.speak(
+              "Firstly, Tap on either right side or left side of the screen to open smart camera to describe what your camera sees !! Now, If you tap on the center of screen you can pay money through Smart UPI method ");
+        },
       ),
       CornerChild(
         Image.asset(
@@ -105,7 +111,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
                 child: InkWell(
                   onTap: _onIButtonTap,
                   child: Image.asset(
-                    'assets/i_button.png',
+                    'assets/Camera1.png',
                     width: w / 4,
                     height: h / 1.5,
                   ),
@@ -119,7 +125,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
                 child: InkWell(
                   onTap: _onWButtonTap,
                   child: Image.asset(
-                    'assets/w_button.png',
+                    'assets/Camera2.png',
                     width: w / 4,
                     height: h / 1.5,
                   ),
