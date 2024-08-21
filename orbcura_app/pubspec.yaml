@@ -91,6 +91,7 @@ flutter:
     - assets/orbcura_english.png
     - assets/orbcura_hindi.png
     - assets/audio.gif
+    - assets/confirm.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
