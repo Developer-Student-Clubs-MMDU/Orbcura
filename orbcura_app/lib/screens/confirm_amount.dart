@@ -118,6 +118,7 @@ class ConfirmAmountPage extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         details.amount = int.parse(_amountController.text);
+                        details.payeeName != null ? Provider.of<AppState>(context).tts.speak(details.payeeName!) : null;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
