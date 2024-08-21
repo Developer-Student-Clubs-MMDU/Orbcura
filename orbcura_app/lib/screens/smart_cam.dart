@@ -2,7 +2,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:orbcura_app/app_state.dart';
+import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 /// CameraApp is the Main Application.
 class SmartCam extends StatefulWidget {
@@ -17,6 +19,8 @@ class _SmartCamState extends State<SmartCam> {
   late List<CameraDescription> _cameras;
   late CameraController controller;
   final gemini = Gemini.instance;
+
+  bool processing = false;
 
 
   @override
@@ -49,11 +53,25 @@ class _SmartCamState extends State<SmartCam> {
   void _describeImage() {
     controller.takePicture().then((value) {
       value.readAsBytes().then((val) {
+        setState(() {
+          processing = true;
+        });
+        () async {
+          while (processing) {
+            await Future.delayed(Duration(milliseconds: 200));
+            Vibration.vibrate(duration: 200);
+            await Future.delayed(Duration(milliseconds: 200));
+          }
+        }();
         gemini.textAndImage(
         text: "What does this show? dont say this picture this that. just say it directly.", /// text
         images: [val] /// list of images
       )
-      .then((va) => Provider.of<AppState>(context, listen: false).tts.speak(va?.content?.parts?.last.text ?? ''))
+      .then((va) {
+        setState(() {
+          processing = false;
+        });
+         Provider.of<AppState>(context, listen: false).tts.speak(va?.content?.parts?.last.text ?? '');})
       .catchError((e) => print(e));
       });
     });
@@ -67,13 +85,46 @@ class _SmartCamState extends State<SmartCam> {
 
   @override
   Widget build(BuildContext context) {
+    var h = MediaQuery.sizeOf(context).height;
     if (!controller.value.isInitialized) {
       return Container();
     }
-    return Scaffold(
-      body: GestureDetector(onTap:() {
-        _describeImage();
+    return FourCornerScreen(
+        CornerChild(
+            Image.asset(
+              "assets/mic.png",
+              height: h / 16,
+            ),
+            () {}),
+        CornerChild(
+          Image.asset(
+            "assets/communicate.png",
+            height: h / 16,
+          ),
+          () {},
+        ),
+        CornerChild(
+          Image.asset(
+            "assets/home.png",
+            height: h / 16,
+          ),
+          () {},
+        ),
+        CornerChild(
+          Image.asset(
+            "assets/back.png",
+            height: h / 16,
+          ),
+          () {},
+        ),
+
+        Scaffold(
+      body: GestureDetector(onLongPress:() {
+        Vibration.vibrate();
+        processing ? null : _describeImage();
       }, child: CameraPreview(controller)),
-    );
+    )
+        
+        );
   }
 }

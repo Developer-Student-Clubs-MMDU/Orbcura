@@ -7,6 +7,7 @@ import 'package:orbcura_app/utils/colors.dart';
 import 'package:orbcura_app/utils/upi_service.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/utils/upi_uri_parser.dart';
+import 'package:vibration/vibration.dart';
 
 class PinBox extends StatelessWidget {
   final int? number;
@@ -50,6 +51,7 @@ class _PinEntryPageState extends State<PinEntryPage> {
   void handleVolumeButton(HardwareButton button) {
     if (button == HardwareButton.volume_up && (pin.length == widget.digits)) {
       print("Sending money");
+      Vibration.vibrate();
       upiService.sendMoneyToUpiId(widget.details.payeeID, widget.details.amount!, pin.join("")).then((value) => print(value.name??""+ " "+(value.refID??" ")));
     }
     else if (button == HardwareButton.volume_up) {
@@ -84,6 +86,7 @@ class _PinEntryPageState extends State<PinEntryPage> {
                 )), () {
           setState(() {
             pin.add(prefix + 1);
+            Vibration.vibrate();
           });
         }),
         CornerChild(
@@ -96,6 +99,7 @@ class _PinEntryPageState extends State<PinEntryPage> {
                 )), () {
           setState(() {
             pin.add(prefix + 2);
+            Vibration.vibrate();
           });
         }),
         CornerChild(
@@ -108,6 +112,7 @@ class _PinEntryPageState extends State<PinEntryPage> {
                 )), () {
           setState(() {
             pin.add(prefix + 3);
+            Vibration.vibrate();
           });
         }),
         CornerChild(
@@ -120,6 +125,7 @@ class _PinEntryPageState extends State<PinEntryPage> {
                 )), () {
           setState(() {
             pin.add(prefix + 4);
+            Vibration.vibrate();
           });
         }),
         Scaffold(
@@ -170,6 +176,7 @@ class _PinEntryPageState extends State<PinEntryPage> {
                       setState(() {
             pin.add((prefix + 5) % 10);
           });
+          Vibration.vibrate();
                     },
                     child: Container(
                       decoration: BoxDecoration(

@@ -6,6 +6,7 @@ import 'package:orbcura_app/utils/upi_uri_parser.dart';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:vibration/vibration.dart';
 
 class QrCamScanPage extends StatefulWidget {
   const QrCamScanPage({super.key});
@@ -50,6 +51,7 @@ class _QrCamScanPageState extends State<QrCamScanPage>
         unawaited(_subscription?.cancel());
         _subscription = null;
         unawaited(controller.stop()); 
+        Vibration.vibrate();
         Navigator.push(
             context,
             MaterialPageRoute(

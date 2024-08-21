@@ -21,6 +21,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   Gemini.init(apiKey: 'AIzaSyBcuU6FiBqEQCaaGEJduwN4gZmsYkj11Ms');
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => AppState())],
