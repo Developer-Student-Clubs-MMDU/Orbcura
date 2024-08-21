@@ -18,7 +18,6 @@ class _SmartCamState extends State<SmartCam> {
   late CameraController controller;
   final gemini = Gemini.instance;
 
-
   @override
   void initState() {
     super.initState();
@@ -47,13 +46,14 @@ class _SmartCamState extends State<SmartCam> {
   }
 
   void _describeImage() {
+    final pro = Provider.of<AppState>(context, listen: false);
     controller.takePicture().then((value) {
       value.readAsBytes().then((val) {
         gemini.textAndImage(
-        text: "What does this show? dont say this picture this that. just say it directly.", /// text
+        text: "What does this show? dont say this picture this that. just say it directly. Respond in ${pro.language} language", /// text
         images: [val] /// list of images
       )
-      .then((va) => Provider.of<AppState>(context, listen: false).tts.speak(va?.content?.parts?.last.text ?? ''))
+      .then((va) => pro.tts.speak(va?.content?.parts?.last.text ?? ''))
       .catchError((e) => print(e));
       });
     });
