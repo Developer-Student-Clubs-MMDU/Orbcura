@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/screens/pin_entry.dart';
 import 'package:orbcura_app/utils/colors.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/utils/upi_uri_parser.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmAmountPage extends StatelessWidget {
   final _amountController = TextEditingController();
   final UPIDetails details;
   ConfirmAmountPage(this.details);
   @override
+  
   Widget build(BuildContext context) {
+    var pro = Provider.of<AppState>(context);
     var h = MediaQuery.sizeOf(context).height;
     var w = MediaQuery.sizeOf(context).height;
     return FourCornerScreen(
@@ -20,7 +24,12 @@ class ConfirmAmountPage extends StatelessWidget {
               "assets/mic.png",
               height: h / 16,
             ),
-            () {}),
+            () {
+              pro.stt.listen(onResult: (result) {
+                if (int.tryParse(result.recognizedWords) != null) {_amountController.text = result.recognizedWords;}
+                
+              },);
+            }),
         CornerChild(
           Image.asset(
             "assets/communicate.png",
