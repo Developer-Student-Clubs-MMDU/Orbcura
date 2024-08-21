@@ -5,6 +5,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/screens/chats.dart';
 import 'package:orbcura_app/screens/confirm_amount.dart';
+import 'package:orbcura_app/screens/confirmation_screen.dart';
 import 'package:orbcura_app/screens/home_screen.dart';
 import 'package:orbcura_app/screens/language.dart';
 import 'package:orbcura_app/screens/login.dart';
@@ -22,6 +23,8 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   Gemini.init(apiKey: 'AIzaSyBcuU6FiBqEQCaaGEJduwN4gZmsYkj11Ms');
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (context) => AppState())],
       child: const MyApp()));
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
 
-      home: SplashScreen(),
+      home: ConfirmationScreen(UPIDetails("9996142844@superyes", amount: 10)),
       routes: {
         '/home': (context) => HomeScreen(),
         // '/splash':(context) => SplashScreen(),
