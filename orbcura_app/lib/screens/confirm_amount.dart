@@ -16,11 +16,30 @@ class ConfirmAmountPage extends StatelessWidget {
   ConfirmAmountPage(this.details);
 
   @override
+  
   Widget build(BuildContext context) {
+    var pro = Provider.of<AppState>(context);
     var h = MediaQuery.sizeOf(context).height;
     var w = MediaQuery.sizeOf(context).width;
 
     return FourCornerScreen(
+        CornerChild(
+            Image.asset(
+              "assets/mic.png",
+              height: h / 16,
+            ),
+            () {
+              pro.stt.listen(onResult: (result) {
+                if (int.tryParse(result.recognizedWords) != null) {_amountController.text = result.recognizedWords;}
+                
+              },);
+            }),
+        CornerChild(
+          Image.asset(
+            "assets/communicate.png",
+            height: h / 16,
+          ),
+          () {},
       CornerChild(
         ImageToggleWidget(
           image1: "assets/mic.png",

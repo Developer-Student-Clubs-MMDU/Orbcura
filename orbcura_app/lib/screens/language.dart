@@ -13,7 +13,6 @@ class LanguagePage extends StatefulWidget {
 class _LanguagePageState extends State<LanguagePage> {
   @override
   Widget build(BuildContext context) {
-    var pro = Provider.of<AppState>(context);
 
     var h = MediaQuery.sizeOf(context).height;
     return FourCornerScreen(
