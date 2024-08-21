@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/screens/pin_entry.dart';
 import 'package:orbcura_app/utils/colors.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/utils/upi_uri_parser.dart';
+import 'package:provider/provider.dart';
 
 class ConfirmAmountPage extends StatelessWidget {
   final _amountController = TextEditingController();
@@ -94,6 +96,7 @@ class ConfirmAmountPage extends StatelessWidget {
                         child: InkWell(
                       onTap: () {
                         details.amount = int.parse(_amountController.text);
+                        details.payeeName != null ? Provider.of<AppState>(context).tts.speak(details.payeeName!) : null;
                         Navigator.push(
                             context,
                             MaterialPageRoute(
