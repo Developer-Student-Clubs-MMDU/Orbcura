@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orbcura_app/screens/chats.dart';
 import 'package:orbcura_app/screens/insta.dart';
 import 'package:orbcura_app/screens/qr_scan.dart';
+import 'package:orbcura_app/screens/smart_cam.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 
 class SplashNavScreen extends StatefulWidget {
@@ -23,14 +24,14 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
   void _onIButtonTap() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => InstaScreen()),
+      MaterialPageRoute(builder: (context) => SmartCam()),
     );
   }
 
   void _onWButtonTap() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChatsScreen()),
+      MaterialPageRoute(builder: (context) => SmartCam()),
     );
   }
 
