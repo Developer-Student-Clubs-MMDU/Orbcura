@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orbcura_app/app_state.dart';
-import 'package:orbcura_app/screens/chats.dart';
-import 'package:orbcura_app/screens/insta.dart';
 import 'package:orbcura_app/screens/qr_camscan.dart';
-import 'package:orbcura_app/screens/qr_scan.dart';
 import 'package:orbcura_app/screens/smart_cam.dart';
+import 'package:orbcura_app/utils/image_toggle_widget.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart'; // Adjust the import path as necessary
 
 class SplashNavScreen extends StatefulWidget {
   const SplashNavScreen({super.key});
@@ -45,9 +42,13 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
 
     return FourCornerScreen(
       CornerChild(
-        Image.asset(
-          "assets/mic.png",
+        ImageToggleWidget(
+          image1: "assets/mic.png",
+          image2: "assets/audio.gif",
           height: h / 16,
+          onTap: () {
+            // Add any additional action if needed
+          },
         ),
         () {},
       ),
