@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:orbcura_app/screens/chats.dart';
-import 'package:orbcura_app/screens/insta.dart';
-import 'package:orbcura_app/screens/qr_scan.dart';
+import 'package:orbcura_app/app_state.dart';
+import 'package:orbcura_app/screens/qr_camscan.dart';
+import 'package:orbcura_app/screens/smart_cam.dart';
+import 'package:orbcura_app/utils/image_toggle_widget.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
+import 'package:provider/provider.dart'; // Adjust the import path as necessary
 
 class SplashNavScreen extends StatefulWidget {
   const SplashNavScreen({super.key});
@@ -16,21 +17,21 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
   void _onUpiButtonTap() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QrScanScreen()),
+      MaterialPageRoute(builder: (context) => QrCamScanPage()),
     );
   }
 
   void _onIButtonTap() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => InstaScreen()),
+      MaterialPageRoute(builder: (context) => SmartCam()),
     );
   }
 
   void _onWButtonTap() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChatsScreen()),
+      MaterialPageRoute(builder: (context) => SmartCam()),
     );
   }
 
@@ -38,21 +39,45 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
   Widget build(BuildContext context) {
     var h = MediaQuery.sizeOf(context).height;
     var w = MediaQuery.sizeOf(context).width;
+    var pro = Provider.of<AppState>(context, listen: false);
 
     return FourCornerScreen(
       CornerChild(
-        Image.asset(
-          "assets/mic.png",
+        ImageToggleWidget(
+          image1: "assets/mic.png",
+          image2: "assets/audio.gif",
           height: h / 16,
+          onTap: () {},
         ),
-        () {},
+        () {
+          pro.stt.listen(
+              onResult: (result) {
+                for (String i in ["qr", "upi", "scan"]) {
+                  if (result.recognizedWords.contains(i)) {
+                    _onUpiButtonTap();
+                    break;
+                  }
+                }
+
+                for (String i in ["camera", "capture", "image"]) {
+                  if (result.recognizedWords.contains(i)) {
+                    _onIButtonTap();
+                    break;
+                  }
+                }
+              },
+            );
+        },
       ),
       CornerChild(
         Image.asset(
           "assets/communicate.png",
           height: h / 16,
         ),
-        () {},
+        () {
+          Provider.of<AppState>(context, listen: false).tts.speak(
+              "Firstly, Tap on either right side or left side of the screen to open smart camera to describe what your camera sees !! Now, If you tap on the center of screen you can pay money through Smart UPI method ");
+        },
       ),
       CornerChild(
         Image.asset(
@@ -104,7 +129,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
                 child: InkWell(
                   onTap: _onIButtonTap,
                   child: Image.asset(
-                    'assets/i_button.png',
+                    'assets/Camera1.png',
                     width: w / 4,
                     height: h / 1.5,
                   ),
@@ -118,7 +143,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
                 child: InkWell(
                   onTap: _onWButtonTap,
                   child: Image.asset(
-                    'assets/w_button.png',
+                    'assets/Camera2.png',
                     width: w / 4,
                     height: h / 1.5,
                   ),

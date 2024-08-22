@@ -23,7 +23,6 @@ class _SmartCamState extends State<SmartCam> {
 
   String description = '';
 
-
   @override
   void initState() {
     super.initState();
@@ -59,6 +58,7 @@ class _SmartCamState extends State<SmartCam> {
         await Future.delayed(Duration(milliseconds: 200));
       }
     } ();
+    final pro = Provider.of<AppState>(context, listen: false);
     controller.takePicture().then((value) {
       setState(() {
         processing = true;
@@ -66,19 +66,19 @@ class _SmartCamState extends State<SmartCam> {
       Vibration.vibrate();
       value.readAsBytes().then((val) {
         gemini.textAndImage(
-        text: "What does this show? dont say this picture this that. just say it directly.", /// text
+        text: "What does this show? dont say this picture this that. just say it directly. Respond in ${pro.language} language", /// text
         images: [val] /// list of images
       )
       .then((va) {
         setState(() {
           description = va?.content?.parts?.last.text ?? '';
         });
-        Provider.of<AppState>(context, listen: false).tts.speak(va?.content?.parts?.last.text ?? '');
+        pro.tts.speak(va?.content?.parts?.last.text ?? '');
         setState(() {
           processing = false;
         });
       })
-      .catchError((e) => print(e));
+          
       });
     });
   }

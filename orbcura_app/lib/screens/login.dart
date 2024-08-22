@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/screens/language.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -19,7 +21,10 @@ class LoginScreen extends StatelessWidget {
             "assets/communicate.png",
             height: h / 16,
           ),
-          () {},
+          () {
+            Provider.of<AppState>(context, listen: false).tts.speak(
+              "Tap in the centre of screen to change language");
+          },
         ),
         CornerChild(
           Image.asset(
@@ -33,12 +38,18 @@ class LoginScreen extends StatelessWidget {
             "assets/login.png",
             height: h / 16,
           ),
-          () {Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => LanguagePage()));},
+          () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => LanguagePage()));
+          },
         ),
-
-        Center(child: Container(decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/login_background.png"), fit: BoxFit.fill)),),)
-        
-    );
+        Center(
+          child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/login_background.png"),
+                    fit: BoxFit.fill)),
+          ),
+        ));
   }
 }

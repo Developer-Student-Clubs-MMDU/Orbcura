@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:orbcura_app/app_state.dart';
-import 'package:orbcura_app/screens/pin_entry.dart';
 import 'package:orbcura_app/utils/colors.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/utils/upi_uri_parser.dart';
 import 'package:orbcura_app/utils/image_toggle_widget.dart';
 import 'package:provider/provider.dart';
 
-class ConfirmAmountPage extends StatelessWidget {
-  final _amountController = TextEditingController();
+class ConfirmationScreen extends StatefulWidget {
   final UPIDetails details;
 
-  ConfirmAmountPage(this.details);
+  ConfirmationScreen(this.details);
+
+  @override
+  State<ConfirmationScreen> createState() => _ConfirmationScreenState();
+}
+
+class _ConfirmationScreenState extends State<ConfirmationScreen> {
+  final _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.sizeOf(context).height;
     var w = MediaQuery.sizeOf(context).width;
-    var pro = Provider.of<AppState>(context, listen: false);
 
     return FourCornerScreen(
       CornerChild(
@@ -28,13 +31,7 @@ class ConfirmAmountPage extends StatelessWidget {
           image2: "assets/audio.gif",
           height: h / 16,
           onTap: () {
-            pro.stt.listen(
-              onResult: (result) {
-                if (int.tryParse(result.recognizedWords) != null) {
-                  _amountController.text = result.recognizedWords;
-                }
-              },
-            );
+            // Add any additional action if needed
           },
         ),
         () {},
@@ -78,21 +75,20 @@ class ConfirmAmountPage extends StatelessWidget {
                 ),
                 SizedBox(height: h / 20),
                 Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: w / 12),
-                    child: Text(
-                      "Amount to pay",
-                      style: GoogleFonts.leagueSpartan(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      textAlign: TextAlign.left,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Money Sent to Bhushan",
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
+                SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: w / 14),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: w / 5), // Shortened width padding
                   child: TextField(
                     controller: _amountController,
                     readOnly: true, // Prevents the keyboard from appearing
@@ -110,49 +106,57 @@ class ConfirmAmountPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: h / 12,
+                  height: h / 25,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                    border: Border.all(color: AppColors.border, width: 1.5),
-                    color: Colors.white,
-                  ),
-                  height: h / 2.2,
-                  width: w / 1.5,
-                  child: Center(
-                    child: InkWell(
-                      onTap: () {
-                        details.amount = int.parse(_amountController.text);
-                        details.payeeName != null
-                            ? Provider.of<AppState>(context)
-                                .tts
-                                .speak(details.payeeName!)
-                            : null;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PinEntryPage(
-                              details,
-                              digits: 6,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          "Tap to confirm amount",
-                          style: GoogleFonts.leagueSpartan(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.fontColour,
-                            height: 0.8,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                SizedBox(
+                  height: h / 7, // Adjust the size of the image as needed
+                  child: Image.asset(
+                      "assets/confirm.png"), // Replace with your image asset
+                ),
+                SizedBox(height: h / 20),
+                Column(
+                  mainAxisSize: MainAxisSize
+                      .min, // Minimize the column's size to its content
+                  children: [
+                    Text(
+                      "Payment",
+                      style: GoogleFonts.leagueSpartan(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w400,
                       ),
+                      textAlign: TextAlign.center,
                     ),
+                    Text(
+                      "Successful",
+                      style: GoogleFonts.leagueSpartan(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                SizedBox(height: h / 15),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "UPI ID - 9350236455@ibl",
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Bhushan Kumar",
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
