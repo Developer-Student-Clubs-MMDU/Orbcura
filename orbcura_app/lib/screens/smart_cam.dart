@@ -77,7 +77,7 @@ class _SmartCamState extends State<SmartCam> {
         setState(() {
           processing = false;
         });
-      })
+      });
           
       });
     });

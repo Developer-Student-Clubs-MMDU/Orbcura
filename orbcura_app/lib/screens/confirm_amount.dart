@@ -8,6 +8,7 @@ import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/utils/upi_uri_parser.dart';
 import 'package:orbcura_app/utils/image_toggle_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 class ConfirmAmountPage extends StatelessWidget {
   final _amountController = TextEditingController();
@@ -124,11 +125,13 @@ class ConfirmAmountPage extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         details.amount = int.parse(_amountController.text);
-                        details.payeeName != null
-                            ? Provider.of<AppState>(context)
+                        if (details.payeeName != null) {
+                          Vibration.vibrate();
+                          Provider.of<AppState>(context)
                                 .tts
-                                .speak(details.payeeName!)
-                            : null;
+                                .speak(details.payeeName!);
+                        }
+                        
                         Navigator.push(
                           context,
                           MaterialPageRoute(

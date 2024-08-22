@@ -4,7 +4,8 @@ import 'package:orbcura_app/screens/qr_camscan.dart';
 import 'package:orbcura_app/screens/smart_cam.dart';
 import 'package:orbcura_app/utils/image_toggle_widget.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
-import 'package:provider/provider.dart'; // Adjust the import path as necessary
+import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart'; // Adjust the import path as necessary
 
 class SplashNavScreen extends StatefulWidget {
   const SplashNavScreen({super.key});
@@ -15,6 +16,7 @@ class SplashNavScreen extends StatefulWidget {
 
 class _SplashNavScreenState extends State<SplashNavScreen> {
   void _onUpiButtonTap() {
+    Vibration.vibrate();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => QrCamScanPage()),
@@ -22,6 +24,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
   }
 
   void _onIButtonTap() {
+    Vibration.vibrate();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SmartCam()),
@@ -29,6 +32,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
   }
 
   void _onWButtonTap() {
+    Vibration.vibrate();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SmartCam()),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:vibration/vibration.dart';
 
 enum Language {hindi, english}
 
@@ -28,6 +29,7 @@ class AppState extends ChangeNotifier {
       await tts.setLanguage("en");
       tts.speak(englishStrings["languageChanged"]!);
     }
+    Vibration.vibrate();
     notifyListeners();
   }
 }
