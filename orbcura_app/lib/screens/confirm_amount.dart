@@ -16,37 +16,25 @@ class ConfirmAmountPage extends StatelessWidget {
   ConfirmAmountPage(this.details);
 
   @override
-  
   Widget build(BuildContext context) {
-    var pro = Provider.of<AppState>(context);
     var h = MediaQuery.sizeOf(context).height;
     var w = MediaQuery.sizeOf(context).width;
+    var pro = Provider.of<AppState>(context, listen: false);
 
     return FourCornerScreen(
-        CornerChild(
-            Image.asset(
-              "assets/mic.png",
-              height: h / 16,
-            ),
-            () {
-              pro.stt.listen(onResult: (result) {
-                if (int.tryParse(result.recognizedWords) != null) {_amountController.text = result.recognizedWords;}
-                
-              },);
-            }),
-        CornerChild(
-          Image.asset(
-            "assets/communicate.png",
-            height: h / 16,
-          ),
-          () {},
       CornerChild(
         ImageToggleWidget(
           image1: "assets/mic.png",
           image2: "assets/audio.gif",
           height: h / 16,
           onTap: () {
-            // Add any additional action if needed
+            pro.stt.listen(
+              onResult: (result) {
+                if (int.tryParse(result.recognizedWords) != null) {
+                  _amountController.text = result.recognizedWords;
+                }
+              },
+            );
           },
         ),
         () {},
@@ -57,9 +45,8 @@ class ConfirmAmountPage extends StatelessWidget {
           height: h / 16,
         ),
         () {
-        Provider.of<AppState>(context, listen: false).tts.speak(
+          Provider.of<AppState>(context, listen: false).tts.speak(
               "Tap on the top left corner of app to enter the amount to be paid through speech");
-        
         },
       ),
       CornerChild(
@@ -137,7 +124,11 @@ class ConfirmAmountPage extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         details.amount = int.parse(_amountController.text);
-                        details.payeeName != null ? Provider.of<AppState>(context).tts.speak(details.payeeName!) : null;
+                        details.payeeName != null
+                            ? Provider.of<AppState>(context)
+                                .tts
+                                .speak(details.payeeName!)
+                            : null;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
