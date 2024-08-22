@@ -3,14 +3,10 @@
 ## NOTE : Prototype named as --> app-release.apk above !!
 
 ### Brief about the Idea - Orbcura
- Orbcura is a mobile app for visually and auditorily impaired people to help them
-conduct their day to day tasks effectively. Often mobile apps have poor
-accessibility options. While people who are not impaired easily enjoy the
-luxuries, impaired people often struggle to use these apps. In short, we are
-building an app which extends the functionalities and accessibility options of
-apps which are used daily like WhatsApp, UPI Payments, Instagram, News,
-etc. So that, impaired people are able to take the advantage of these
-functionalities.
+ Orbcura is a mobile app for visually impaired people to help them conduct their day to day tasks effectively. Often mobile apps have poor accessibility options. While people who are not impaired easily enjoy the luxuries, impaired people often struggle to use these apps. In short, we are building an app which extends the functionalities and accessibility options of apps which are used daily like UPI Payments, Image Description, etc. So that, impaired people are able to take the advantage of these functionalities
+
+![image](https://github.com/user-attachments/assets/4a949d52-438e-45b9-babc-f0874cf181ef)
+
 
 ### Opportunities
 How is it different from other solutions?
