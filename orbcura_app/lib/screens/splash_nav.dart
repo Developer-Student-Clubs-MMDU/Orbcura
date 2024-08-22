@@ -39,6 +39,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
   Widget build(BuildContext context) {
     var h = MediaQuery.sizeOf(context).height;
     var w = MediaQuery.sizeOf(context).width;
+    var pro = Provider.of<AppState>(context, listen: false);
 
     return FourCornerScreen(
       CornerChild(
@@ -46,11 +47,27 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
           image1: "assets/mic.png",
           image2: "assets/audio.gif",
           height: h / 16,
-          onTap: () {
-            // Add any additional action if needed
-          },
+          onTap: () {},
         ),
-        () {},
+        () {
+          pro.stt.listen(
+              onResult: (result) {
+                for (String i in ["qr", "upi", "scan"]) {
+                  if (result.recognizedWords.contains(i)) {
+                    _onUpiButtonTap();
+                    break;
+                  }
+                }
+
+                for (String i in ["camera", "capture", "image"]) {
+                  if (result.recognizedWords.contains(i)) {
+                    _onIButtonTap();
+                    break;
+                  }
+                }
+              },
+            );
+        },
       ),
       CornerChild(
         Image.asset(
