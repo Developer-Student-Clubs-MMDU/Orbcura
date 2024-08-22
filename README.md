@@ -5,18 +5,15 @@
 ### Brief about the Idea - Orbcura
  Orbcura is a mobile app for visually impaired people to help them conduct their day to day tasks effectively. Often mobile apps have poor accessibility options. While people who are not impaired easily enjoy the luxuries, impaired people often struggle to use these apps. In short, we are building an app which extends the functionalities and accessibility options of apps which are used daily like UPI Payments, Image Description, etc. So that, impaired people are able to take the advantage of these functionalities
 
-![image](https://github.com/user-attachments/assets/4a949d52-438e-45b9-babc-f0874cf181ef)
-
 
 ### Opportunities
 How is it different from other solutions?
  TalkBack is an accessibility feature incorporated into Android smartphones that allows
 visually impaired people to engage with their devices via touch gestures. But, this feature
-only provides navigation. Our app provides complete integration to most used apps for
-efficient usage.
+only provides navigation. Our app provides complete integration to UPI & smart camera.
  VoiceOver is an accessibility feature on Apple devices that gives audio explanations and
 spoken feedback. But, this requires the apps to actually implement these accessibility
-options. Not all the apps implement these. Our app provides integrations to the app which
+options. Not all the apps implement these. Our app provides integrations to the upi and camera which
 do not even implement these.
 USP of Orbcura
  Thus, the unique selling proposition (USP) of the idea is the extension of accessibility
