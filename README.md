@@ -34,10 +34,10 @@ features outside the allowed domains.
  Gemini API for providing descriptions of images and summarization of messages<br/>
 
 ### User Flow
-![user flow](https://github.com/user-attachments/assets/97615a9c-1b51-4d30-8ca6-6b6db58fde7f)
+![use case](https://github.com/user-attachments/assets/e035fafc-9cd9-4fbc-9b63-1ca4422f7585)
 
 ### Architecture Diagram
-![Orbcura Flutter App](https://github.com/user-attachments/assets/124281cc-e912-47fa-8d5e-450a2eb17a6f)
+![flow chart](https://github.com/user-attachments/assets/c133bb40-7938-4460-a013-6441750b1569)
 
 
 ---- we are currently building thia idea. So kindly share you feedback if this idea finds you helpful !!
