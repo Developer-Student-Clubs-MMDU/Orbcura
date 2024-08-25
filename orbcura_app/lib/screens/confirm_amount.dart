@@ -29,6 +29,7 @@ class ConfirmAmountPage extends StatelessWidget {
           image2: "assets/audio.gif",
           height: h / 16,
           onTap: () {
+            Vibration.vibrate();
             pro.stt.listen(
               onResult: (result) {
                 if (int.tryParse(result.recognizedWords) != null) {
@@ -62,7 +63,7 @@ class ConfirmAmountPage extends StatelessWidget {
           "assets/back.png",
           height: h / 16,
         ),
-        () {},
+        () {Vibration.vibrate(); Navigator.pop((context));},
       ),
       Scaffold(
         body: Container(
@@ -113,26 +114,17 @@ class ConfirmAmountPage extends StatelessWidget {
                 SizedBox(
                   height: h / 12,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                    border: Border.all(color: AppColors.border, width: 1.5),
-                    color: Colors.white,
-                  ),
-                  height: h / 2.2,
-                  width: w / 1.5,
-                  child: Center(
-                    child: InkWell(
+                InkWell(
                       onTap: () {
                         details.amount = int.parse(_amountController.text);
                         if (details.payeeName != null) {
                           Vibration.vibrate();
-                          Provider.of<AppState>(context)
+                          Provider.of<AppState>(context, listen: false)
                                 .tts
                                 .speak(details.payeeName!);
                         }
                         
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PinEntryPage(
@@ -142,22 +134,32 @@ class ConfirmAmountPage extends StatelessWidget {
                           ),
                         );
                       },
+                      child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(18)),
+                      border: Border.all(color: AppColors.border, width: 1.5),
+                      color: Colors.white,
+                    ),
+                    height: h / 2.2,
+                    width: w / 1.5,
+                    child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          "Tap to confirm amount",
-                          style: GoogleFonts.leagueSpartan(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.fontColour,
-                            height: 0.8,
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            "Tap to confirm amount",
+                            style: GoogleFonts.leagueSpartan(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.fontColour,
+                              height: 0.8,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ),
                 ),
+                
               ],
             ),
           ),

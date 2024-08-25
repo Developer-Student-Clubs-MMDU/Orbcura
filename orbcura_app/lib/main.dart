@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
 
-      home: SplashScreen(),
+      home: LanguagePage(),
       routes: {
         '/home': (context) => HomeScreen(),
         // '/splash':(context) => SplashScreen(),

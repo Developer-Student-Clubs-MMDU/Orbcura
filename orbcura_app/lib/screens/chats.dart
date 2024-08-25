@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:orbcura_app/utils/colors.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/widgets/chat_item.dart';
+import 'package:vibration/vibration.dart';
 
 class ChatsScreen extends StatelessWidget {
   @override
@@ -58,7 +59,8 @@ class ChatsScreen extends StatelessWidget {
             "assets/back.png",
             height: h / 16,
           ),
-          () {},
+          () {Vibration.vibrate();
+            Navigator.pop((context));},
         ),
         Scaffold(
           body: Container(

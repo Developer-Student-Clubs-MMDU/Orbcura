@@ -3,6 +3,7 @@ import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/screens/language.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -39,6 +40,7 @@ class LoginScreen extends StatelessWidget {
             height: h / 16,
           ),
           () {
+            Vibration.vibrate();
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => LanguagePage()));
           },

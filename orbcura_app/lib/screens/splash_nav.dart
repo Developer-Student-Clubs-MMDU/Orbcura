@@ -95,7 +95,7 @@ class _SplashNavScreenState extends State<SplashNavScreen> {
           "assets/back.png",
           height: h / 16,
         ),
-        () {},
+        () {Vibration.vibrate();},
       ),
       Scaffold(
         body: Stack(

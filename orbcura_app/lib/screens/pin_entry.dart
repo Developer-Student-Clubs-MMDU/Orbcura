@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_android_volume_keydown/flutter_android_volume_keydown.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:orbcura_app/screens/confirmation_screen.dart';
 import 'package:orbcura_app/utils/colors.dart';
 import 'package:orbcura_app/utils/upi_service.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
@@ -51,12 +52,13 @@ class _PinEntryPageState extends State<PinEntryPage> {
   void handleVolumeButton(HardwareButton button) {
     if (button == HardwareButton.volume_up && (pin.length == widget.digits)) {
       print("Sending money");
-      upiService.sendMoneyToUpiId(widget.details.payeeID, widget.details.amount!, pin.join("")).then((value) => print(value.name??""+ " "+(value.refID??" ")));
+      Vibration.vibrate();
+      //upiService.sendMoneyToUpiId(widget.details.payeeID, widget.details.amount!, pin.join("")).then((value) => print(value.name??""+ " "+(value.refID??" ")));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ConfirmationScreen(UPIDetails("9996142844@superyes"))));
     }
     else if (button == HardwareButton.volume_up) {
       setState(() {
         prefix == 0 ? prefix = 5 : prefix = 0;
-        Vibration.vibrate();
       });
     } else if (button == HardwareButton.volume_down) {
       setState(() {

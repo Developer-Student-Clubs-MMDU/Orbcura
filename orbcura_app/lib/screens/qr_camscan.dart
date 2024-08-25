@@ -53,7 +53,7 @@ class _QrCamScanPageState
         _subscription = null;
         unawaited(controller.stop()); 
         Vibration.vibrate();
-        Navigator.push(
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => ConfirmAmountPage(details!)));
@@ -122,7 +122,7 @@ class _QrCamScanPageState
             "assets/home.png",
             height: h / 16,
           ),
-          () {Navigator.pop(context);},
+          () {Vibration.vibrate();Navigator.pop(context);},
         ))),
           MobileScanner(
             controller: controller,

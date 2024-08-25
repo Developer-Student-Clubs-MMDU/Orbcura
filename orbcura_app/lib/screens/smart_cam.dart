@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:orbcura_app/app_state.dart';
 import 'package:orbcura_app/widgets/four_corner_screen.dart';
@@ -17,7 +18,7 @@ class SmartCam extends StatefulWidget {
 
 class _SmartCamState extends State<SmartCam> {
   late List<CameraDescription> _cameras;
-  late CameraController controller;
+  CameraController? controller;
   final gemini = Gemini.instance;
   bool processing = false;
 
@@ -29,7 +30,7 @@ class _SmartCamState extends State<SmartCam> {
     availableCameras().then((value) {
       _cameras = value;
       controller = CameraController(_cameras[0], ResolutionPreset.max);
-    controller.initialize().then((_) {
+    controller?.initialize().then((_) {
       if (!mounted) {
         return;
       }
@@ -59,14 +60,14 @@ class _SmartCamState extends State<SmartCam> {
       }
     } ();
     final pro = Provider.of<AppState>(context, listen: false);
-    controller.takePicture().then((value) {
+    controller?.takePicture().then((value) {
       setState(() {
         processing = true;
       });
       Vibration.vibrate();
       value.readAsBytes().then((val) {
         gemini.textAndImage(
-        text: "What does this show? dont say this picture this that. just say it directly. Respond in ${pro.language} language", /// text
+        text: "What does this show? dont say this picture this that. Dont make it a paragraph but make it detailed enough. Respond in ${pro.language} language", /// text
         images: [val] /// list of images
       )
       .then((va) {
@@ -85,7 +86,7 @@ class _SmartCamState extends State<SmartCam> {
 
   @override
   void dispose() {
-    controller.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -105,25 +106,36 @@ class _SmartCamState extends State<SmartCam> {
             "assets/communicate.png",
             height: h / 16,
           ),
-          () {},
+          () {
+            final pro = Provider.of<AppState>(context, listen: false);
+            pro.tts.speak("Press and hold the screen till vibration to get to know about what is in front");
+          },
         ),
         CornerChild(
           Image.asset(
             "assets/home.png",
             height: h / 16,
           ),
-          () {},
+          () {Navigator.pop(context);},
         ),
         CornerChild(
           Image.asset(
             "assets/back.png",
             height: h / 16,
           ),
-          () {},
+          () {Vibration.vibrate();Navigator.pop(context);},
         ),
         Scaffold(
       body: GestureDetector(onLongPress:() {
-        _describeImage();
-      }, child: Center(child: Stack(children: [CameraPreview(controller), Positioned.fill(child: CircularProgressIndicator.adaptive()), Positioned(bottom: 10, left: 10,child: Text(description))])))));
+          _describeImage();
+        }, child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Align(alignment: Alignment.center, child: Text("Press and Hold ")),
+            Center(child: Stack(children: [controller == null ? SizedBox(width: 1,) :CameraPreview(controller!), processing == true ? Positioned.fill(child: CircularProgressIndicator.adaptive()) : SizedBox(width: 1,),])),
+          Align(alignment: Alignment.center, child: Text(description))
+          ]
+        ),
+      )));
   }
 }

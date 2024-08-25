@@ -6,6 +6,7 @@ import 'package:orbcura_app/widgets/four_corner_screen.dart';
 import 'package:orbcura_app/utils/upi_uri_parser.dart';
 import 'package:orbcura_app/utils/image_toggle_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 class ConfirmationScreen extends StatefulWidget {
   final UPIDetails details;
@@ -17,7 +18,7 @@ class ConfirmationScreen extends StatefulWidget {
 }
 
 class _ConfirmationScreenState extends State<ConfirmationScreen> {
-  final _amountController = TextEditingController();
+  final _amountController = TextEditingController.fromValue(TextEditingValue(text: "100"));
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
           "assets/back.png",
           height: h / 16,
         ),
-        () {},
+        () {Vibration.vibrate();Navigator.pop((context));},
       ),
       Scaffold(
         body: Container(
@@ -90,6 +91,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                   padding: EdgeInsets.symmetric(
                       horizontal: w / 5), // Shortened width padding
                   child: TextField(
+  
                     controller: _amountController,
                     readOnly: true, // Prevents the keyboard from appearing
                     decoration: InputDecoration(
