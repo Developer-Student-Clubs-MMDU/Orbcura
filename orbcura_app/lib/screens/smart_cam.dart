@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,6 +23,7 @@ class _SmartCamState extends State<SmartCam> {
   CameraController? controller;
   final gemini = Gemini.instance;
   bool processing = false;
+  Uint8List? image;
 
   String description = '';
 
@@ -51,21 +54,37 @@ class _SmartCamState extends State<SmartCam> {
     
   }
 
+  List<Widget> _showImage(CameraController? controller, Uint8List? image) {
+    if (controller == null) {
+      return <Widget>[SizedBox(width: 1,)];
+    } else if (image == null && processing == false) {
+      return <Widget>[CameraPreview(controller), ];
+    } else  if (image != null && processing == true){
+      return <Widget>[Image.memory(image), Positioned.fill(child: Center(child: CircularProgressIndicator.adaptive()))];
+    } else {
+      return <Widget>[CameraPreview(controller), ];
+    }
+  }
   void _describeImage() {
-    () async {
+    
+    final pro = Provider.of<AppState>(context, listen: false);
+    controller?.takePicture().then((value) {
+      
+      Vibration.vibrate();
+      value.readAsBytes().then((val) {
+        setState(() {
+          processing = true;
+          image = val;
+        });
+
+        () async {
       while (processing) {
         await Future.delayed(Duration(milliseconds: 200));
         Vibration.vibrate(duration: 200);
         await Future.delayed(Duration(milliseconds: 200));
       }
     } ();
-    final pro = Provider.of<AppState>(context, listen: false);
-    controller?.takePicture().then((value) {
-      setState(() {
-        processing = true;
-      });
-      Vibration.vibrate();
-      value.readAsBytes().then((val) {
+        
         gemini.textAndImage(
         text: "What does this show? dont say this picture this that. Dont make it a paragraph but make it detailed enough. Respond in ${pro.language} language", /// text
         images: [val] /// list of images
@@ -73,15 +92,14 @@ class _SmartCamState extends State<SmartCam> {
       .then((va) {
         setState(() {
           description = va?.content?.parts?.last.text ?? '';
-        });
-        pro.tts.speak(va?.content?.parts?.last.text ?? '');
-        setState(() {
           processing = false;
         });
+        pro.tts.speak(va?.content?.parts?.last.text ?? '');
       });
           
       });
     });
+    
   }
 
   @override
@@ -132,7 +150,7 @@ class _SmartCamState extends State<SmartCam> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Align(alignment: Alignment.center, child: Text("Press and Hold ")),
-            Center(child: Stack(children: [controller == null ? SizedBox(width: 1,) :CameraPreview(controller!), processing == true ? Positioned.fill(child: CircularProgressIndicator.adaptive()) : SizedBox(width: 1,),])),
+            Center(child: Stack(children: _showImage(controller, image))),
           Align(alignment: Alignment.center, child: Text(description))
           ]
         ),
